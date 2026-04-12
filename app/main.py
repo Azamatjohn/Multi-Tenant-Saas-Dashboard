@@ -2,8 +2,8 @@ from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from app.database import engine
 from app.models import *  # noqa
-from app.routers import auth, workspaces, members, billing
-
+from app.routers import auth, workspaces, members, billing, analytics
+from app.middleware.usage import UsageTrackingMiddleware
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -12,10 +12,13 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="SaaS Platform API", version="0.1.0", lifespan=lifespan)
 
+app.add_middleware(UsageTrackingMiddleware)
+
 app.include_router(auth.router, prefix="/api")
 app.include_router(workspaces.router, prefix="/api")
 app.include_router(members.router, prefix="/api")
 app.include_router(billing.router, prefix="/api")
+app.include_router(analytics.router, prefix="/api")
 
 @app.get("/health")
 async def health():
