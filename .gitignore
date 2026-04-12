@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 backend/.env
 .env
 backend/.env
 .env
+=======
+.env
+.env
+alembic.ini
+>>>>>>> fb79ee63b080f098a123f76ba7bca65e1105cb96
