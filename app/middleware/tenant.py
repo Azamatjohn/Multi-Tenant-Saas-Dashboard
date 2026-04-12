@@ -11,6 +11,9 @@ from app.models.user import User
 from app.models.workspace import Workspace
 from app.models.member import WorkspaceMember, MemberRole
 
+from app.models.billing import Subscription, PlanName, SubscriptionStatus
+
+
 
 class TenantContext:
     def __init__(self, workspace: Workspace, membership: WorkspaceMember, user: User):
@@ -59,3 +62,52 @@ def require_role(*roles: MemberRole):
             )
         return ctx
     return check_role
+
+
+
+
+
+
+
+
+
+PLAN_LIMITS = {
+    PlanName.starter: {"members": 3, "api_calls": 10_000},
+    PlanName.pro: {"members": 20, "api_calls": 500_000},
+    PlanName.enterprise: {"members": 999, "api_calls": 10_000_000},
+}
+
+
+async def get_workspace_plan(
+    ctx: TenantContext = Depends(get_tenant_context),
+    db: AsyncSession = Depends(get_db),
+) -> PlanName:
+    """Returns the current plan for the workspace."""
+    from sqlalchemy import select
+    result = await db.execute(
+        select(Subscription).where(Subscription.workspace_id == ctx.workspace.id)
+    )
+    subscription = result.scalar_one_or_none()
+
+    if not subscription or subscription.status == SubscriptionStatus.cancelled:
+        return PlanName.starter
+
+    return subscription.plan
+
+
+def require_plan(*plans: PlanName):
+    """Gate a route to specific plans only."""
+    async def check_plan(plan: PlanName = Depends(get_workspace_plan)):
+        if plan not in plans:
+            raise HTTPException(
+                status_code=402,
+                detail=f"This feature requires one of these plans: {[p.value for p in plans]}"
+            )
+        return plan
+    return check_plan
+
+
+# @router.get("/some-pro-feature")
+# async def pro_feature(
+#     plan = Depends(require_plan(PlanName.pro, PlanName.enterprise))
+# ):
