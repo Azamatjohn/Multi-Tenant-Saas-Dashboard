@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const pageTitles: Record<string, string> = {
   "": "Dashboard",
@@ -25,7 +26,7 @@ export default function Topbar({ workspace }: { workspace: string }) {
           <Bell className="w-5 h-5" />
         </button>
         <Button size="sm" asChild>
-          <a href={`/${workspace}/members`}>Invite member</a>
+          <Link href={`/${workspace}/members`}>Invite member</Link>
         </Button>
       </div>
     </header>

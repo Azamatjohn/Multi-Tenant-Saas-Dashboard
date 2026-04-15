@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useParams } from "next/navigation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useParams, useRouter } from "next/navigation";
 
 export default function SettingsPage() {
   const params = useParams();
@@ -27,6 +27,8 @@ export default function SettingsPage() {
     },
   });
 
+  const router = useRouter();
+
   const updateMutation = useMutation({
     mutationFn: async () => {
       await api.patch(`/workspaces/${workspace}`, { name, slug });
@@ -36,7 +38,7 @@ export default function SettingsPage() {
       setSaved(true);
       setTimeout(() => setSaved(false), 2000);
       if (slug !== workspace) {
-        window.location.href = `/${slug}/settings`;
+        router.push(`/${slug}/settings`);
       }
     },
   });
