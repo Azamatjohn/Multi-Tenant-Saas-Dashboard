@@ -6,6 +6,9 @@ import api from "@/lib/api";
 import { AnalyticsResponse } from "@/types";
 import { Users, Activity, BarChart3, CreditCard } from "lucide-react";
 
+
+import Link from "next/link";
+
 export default function DashboardPage() {
   const params = useParams();
   const workspace = params.workspace as string;
@@ -117,21 +120,20 @@ export default function DashboardPage() {
         <div className="bg-white rounded-xl border border-slate-200 p-5">
           <h3 className="text-sm font-semibold text-slate-700 mb-4">Quick actions</h3>
           <div className="space-y-2">
-            {[
+                        {[
               { label: "Invite a member", href: `/${workspace}/members` },
               { label: "View analytics", href: `/${workspace}/analytics` },
               { label: "Manage billing", href: `/${workspace}/billing` },
               { label: "Workspace settings", href: `/${workspace}/settings` },
             ].map((action) => (
-
-              <a  key={action.label}
+              <Link
+                key={action.label}
                 href={action.href}
                 className="flex items-center justify-between p-3 rounded-lg border border-slate-100 hover:border-slate-300 hover:bg-slate-50 transition-colors text-sm text-slate-700"
               >
-
                 {action.label}
                 <span className="text-slate-400">→</span>
-              </a>
+              </Link>
             ))}
           </div>
         </div>

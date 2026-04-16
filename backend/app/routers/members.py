@@ -7,7 +7,9 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from sqlalchemy.orm import joinedload
+from app.services.email import send_invite_email
 
+from app.config import settings
 from app.core.dependencies import get_current_user
 
 
@@ -190,9 +192,18 @@ async def create_invite(
     await db.commit()
     await db.refresh(invite)
 
-    # in Phase 5 we'll send a real email here
-    # for now print the invite link so you can test it
-    print(f"\n INVITE LINK: http://localhost:3000/invite/{invite.token}\n")
+    await db.refresh(invite)
+
+    # send real invite email
+    invite_url = f"{settings.FRONTEND_URL}/invite/{invite.token}"
+
+    await send_invite_email(
+        to_email=invite.email,
+        workspace_name=ctx.workspace.name,
+        invited_by_name=ctx.user.full_name,
+        role=payload.role.value,
+        invite_url=invite_url,
+    )
 
     return invite
 

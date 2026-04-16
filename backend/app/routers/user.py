@@ -16,6 +16,9 @@ from datetime import datetime, timezone
 from sqlalchemy import select
 from fastapi import HTTPException
 
+from app.models.audit import AuditLog
+from app.models.workspace import Workspace
+
 router = APIRouter(tags=["user"])
 
 
@@ -67,3 +70,36 @@ async def get_invite_info(
         "workspace_name": workspace.name if workspace else "",
         "workspace_slug": workspace.slug if workspace else "",
     }
+
+
+@router.get("/workspaces/{workspace_slug}/notifications")
+async def get_notifications(
+    workspace_slug: str,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+
+    result = await db.execute(
+        select(Workspace).where(Workspace.slug == workspace_slug)
+    )
+    workspace = result.scalar_one_or_none()
+    if not workspace:
+        raise HTTPException(status_code=404, detail="Workspace not found")
+
+    result = await db.execute(
+        select(AuditLog)
+        .where(AuditLog.workspace_id == workspace.id)
+        .order_by(AuditLog.created_at.desc())
+        .limit(10)
+    )
+    logs = result.scalars().all()
+
+    return [
+        {
+            "id": str(log.id),
+            "action": log.action,
+            "detail": log.detail,
+            "created_at": log.created_at.isoformat(),
+        }
+        for log in logs
+    ]

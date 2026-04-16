@@ -11,13 +11,17 @@ import {
   CreditCard,
   Settings,
   LogOut,
+  ScrollText,
 } from "lucide-react";
+
+
 
 const navItems = (workspace: string) => [
   { label: "Dashboard", href: `/${workspace}`, icon: LayoutDashboard },
   { label: "Members", href: `/${workspace}/members`, icon: Users },
   { label: "Analytics", href: `/${workspace}/analytics`, icon: BarChart3 },
   { label: "Billing", href: `/${workspace}/billing`, icon: CreditCard },
+  { label: "Audit log", href: `/${workspace}/audit`, icon: ScrollText },
   { label: "Settings", href: `/${workspace}/settings`, icon: Settings },
 ];
 
