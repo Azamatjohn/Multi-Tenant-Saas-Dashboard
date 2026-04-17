@@ -108,7 +108,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:3000",
-        "https://multi-tenant-saas-dashboard-sandy.vercel.app"
+        "https://multi-tenant-saas-dashboard-hazel.vercel.app"
                    ],
     allow_credentials=True,
     allow_methods=["*"],
