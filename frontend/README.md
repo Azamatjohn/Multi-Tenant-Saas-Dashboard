@@ -1,10 +1,5 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-**Live demo:** https://multi-tenant-saas-dashboard-hazel.vercel.app
-**API:** https://multi-tenant-saas-dashboard-q6s2.onrender.com/docs
-
-
-
 ## Getting Started
 
 First, run the development server:
