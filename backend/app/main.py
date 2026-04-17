@@ -108,7 +108,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:3000",
-        "https://frontend-eight-eta-36.vercel.app"
+        "https://multi-tenant-saas-dashboard-sandy.vercel.app"
                    ],
     allow_credentials=True,
     allow_methods=["*"],
