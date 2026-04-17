@@ -75,61 +75,105 @@ export default function LandingPage() {
         </p>
       </section>
 
+
       {/* Dashboard preview */}
-      <section className="max-w-5xl mx-auto px-6 pb-24">
-        <div className="bg-slate-900 rounded-2xl p-1">
-          <div className="bg-slate-800 rounded-xl p-4">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-3 h-3 rounded-full bg-red-500" />
-              <div className="w-3 h-3 rounded-full bg-yellow-500" />
-              <div className="w-3 h-3 rounded-full bg-green-500" />
-              <div className="flex-1 bg-slate-700 rounded-md h-6 mx-4" />
+<section className="max-w-5xl mx-auto px-6 pb-24">
+  <div className="bg-slate-900 rounded-2xl p-1 shadow-2xl">
+    <div className="bg-slate-800 rounded-xl overflow-hidden">
+      {/* Browser bar */}
+      <div className="flex items-center gap-2 px-4 py-3 bg-slate-900 border-b border-slate-700">
+        <div className="w-3 h-3 rounded-full bg-red-500" />
+        <div className="w-3 h-3 rounded-full bg-yellow-500" />
+        <div className="w-3 h-3 rounded-full bg-green-500" />
+        <div className="flex-1 bg-slate-700 rounded-md h-6 mx-4 flex items-center px-3">
+          <span className="text-slate-400 text-xs">app.nexushq.com/acme-corp</span>
+        </div>
+      </div>
+
+      <div className="flex h-72">
+        {/* Sidebar */}
+        <div className="w-48 bg-slate-900 border-r border-slate-700 p-4 flex flex-col gap-1 flex-shrink-0">
+          <div className="flex items-center gap-2 mb-4">
+            <div className="w-6 h-6 rounded bg-slate-600 flex items-center justify-center text-white text-xs font-bold">A</div>
+            <span className="text-slate-300 text-xs font-medium">acme-corp</span>
+          </div>
+          {[
+            { label: "Dashboard", active: true },
+            { label: "Members", active: false },
+            { label: "Analytics", active: false },
+            { label: "Billing", active: false },
+            { label: "Settings", active: false },
+          ].map((item) => (
+            <div
+              key={item.label}
+              className={`px-3 py-1.5 rounded-lg text-xs ${
+                item.active
+                  ? "bg-white text-slate-900 font-medium"
+                  : "text-slate-400"
+              }`}
+            >
+              {item.label}
             </div>
-            <div className="flex gap-3">
-              <div className="w-36 bg-slate-900 rounded-lg p-3 space-y-2">
-                <div className="h-4 bg-slate-700 rounded w-20" />
-                <div className="h-3 bg-slate-600 rounded w-16 mt-3" />
-                <div className="h-3 bg-slate-600 rounded w-14" />
-                <div className="h-3 bg-slate-600 rounded w-20" />
-                <div className="h-3 bg-slate-600 rounded w-12" />
-                <div className="h-3 bg-slate-600 rounded w-16" />
+          ))}
+        </div>
+
+        {/* Main content */}
+        <div className="flex-1 p-4 overflow-hidden">
+          {/* Topbar */}
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-white text-sm font-semibold">Dashboard</span>
+            <div className="bg-white text-slate-900 text-xs px-3 py-1 rounded-lg font-medium">
+              Invite member
+            </div>
+          </div>
+
+          {/* Stat cards */}
+          <div className="grid grid-cols-4 gap-2 mb-4">
+            {[
+              { label: "Total members", value: "24", color: "bg-blue-500" },
+              { label: "Active this week", value: "18", color: "bg-emerald-500" },
+              { label: "API calls", value: "128k", color: "bg-purple-500" },
+              { label: "Current plan", value: "Pro", color: "bg-amber-500" },
+            ].map((stat) => (
+              <div key={stat.label} className="bg-slate-900 rounded-lg p-2.5">
+                <div className={`w-4 h-4 ${stat.color} rounded mb-1.5 opacity-90`} />
+                <div className="text-slate-400 text-[9px] mb-0.5">{stat.label}</div>
+                <div className="text-white text-sm font-semibold">{stat.value}</div>
               </div>
-              <div className="flex-1 space-y-3">
-                <div className="grid grid-cols-4 gap-2">
-                  {["bg-blue-500", "bg-emerald-500", "bg-purple-500", "bg-amber-500"].map((c, i) => (
-                    <div key={i} className="bg-slate-900 rounded-lg p-3">
-                      <div className={`w-6 h-6 ${c} rounded mb-2 opacity-80`} />
-                      <div className="h-2 bg-slate-700 rounded w-12 mb-1" />
-                      <div className="h-4 bg-slate-600 rounded w-8" />
-                    </div>
-                  ))}
-                </div>
-                <div className="grid grid-cols-3 gap-2">
-                  <div className="col-span-2 bg-slate-900 rounded-lg p-3">
-                    <div className="h-2 bg-slate-700 rounded w-24 mb-3" />
-                    <div className="flex items-end gap-1 h-20">
-                      {[40, 65, 45, 80, 55, 90, 60, 75, 50, 85, 70, 95].map((h, i) => (
-                        <div key={i} className="flex-1 bg-slate-600 rounded-t opacity-70" style={{ height: `${h}%` }} />
-                      ))}
-                    </div>
+            ))}
+          </div>
+
+          {/* Chart + actions */}
+          <div className="grid grid-cols-3 gap-2">
+            <div className="col-span-2 bg-slate-900 rounded-lg p-3">
+              <div className="text-slate-400 text-[9px] mb-2">API usage — last 30 days</div>
+              <div className="flex items-end gap-0.5 h-16">
+                {[30, 50, 35, 65, 45, 80, 55, 90, 60, 75, 50, 85, 40, 70, 95, 60, 80, 45, 70, 88].map((h, i) => (
+                  <div
+                    key={i}
+                    className="flex-1 bg-slate-600 rounded-t-sm"
+                    style={{ height: `${h}%` }}
+                  />
+                ))}
+              </div>
+            </div>
+            <div className="bg-slate-900 rounded-lg p-3">
+              <div className="text-slate-400 text-[9px] mb-2">Quick actions</div>
+              <div className="space-y-1.5">
+                {["Invite a member", "View analytics", "Manage billing", "Settings"].map((a) => (
+                  <div key={a} className="flex items-center justify-between bg-slate-800 rounded px-2 py-1">
+                    <span className="text-slate-300 text-[9px]">{a}</span>
+                    <span className="text-slate-500 text-[9px]">→</span>
                   </div>
-                  <div className="bg-slate-900 rounded-lg p-3">
-                    <div className="h-2 bg-slate-700 rounded w-20 mb-3" />
-                    <div className="space-y-2">
-                      {[1, 2, 3].map((i) => (
-                        <div key={i} className="flex items-center gap-2">
-                          <div className="w-5 h-5 rounded-full bg-slate-600" />
-                          <div className="h-2 bg-slate-700 rounded flex-1" />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* Features */}
       <section id="features" className="bg-slate-50 dark:bg-slate-900 py-24 transition-colors">

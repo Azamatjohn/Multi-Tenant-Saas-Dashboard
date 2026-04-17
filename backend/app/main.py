@@ -106,7 +106,10 @@ async def health(db: AsyncSession = Depends(get_db)):
 # add this AFTER app = FastAPI(...) and BEFORE other middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=[
+        "http://localhost:3000",
+        "https://frontend-eight-eta-36.vercel.app"
+                   ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
