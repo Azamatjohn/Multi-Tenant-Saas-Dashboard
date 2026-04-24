@@ -1,3 +1,8 @@
+**Live demo:** https://multi-tenant-saas-dashboard-hazel.vercel.app
+**API:** https://multi-tenant-saas-dashboard-q6s2.onrender.com/docs
+
+
+
 # NexusHQ — Multi-Tenant SaaS Dashboard
 
 A full-stack SaaS platform built from scratch with production-grade architecture. Teams can create isolated workspaces, manage members with role-based access control, track API usage analytics, and handle subscriptions — all through a clean, modern dashboard.
