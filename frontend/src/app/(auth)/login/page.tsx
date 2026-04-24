@@ -63,29 +63,31 @@ export default function LoginPage() {
     }
   };
 
-  return (
+    return (
     <div className="space-y-6">
       <div className="space-y-1">
-        <div className="lg:hidden text-2xl font-semibold mb-4">NexusHQ</div>
-        <h1 className="text-2xl font-semibold tracking-tight">Welcome back</h1>
-        <p className="text-sm text-muted-foreground">Sign in to your account to continue</p>
+        <div className="lg:hidden text-2xl font-semibold mb-4 text-slate-900 dark:text-white">NexusHQ</div>
+        <h1 className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-white">Welcome back</h1>
+        <p className="text-sm text-slate-500 dark:text-slate-400">Sign in to your account to continue</p>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="space-y-1.5">
-          <Label htmlFor="email">Work email</Label>
-          <Input id="email" type="email" placeholder="you@company.com" {...register("email")} />
+          <Label htmlFor="email" className="text-slate-700 dark:text-slate-300">Work email</Label>
+          <Input id="email" type="email" placeholder="you@company.com" {...register("email")}
+            className="dark:bg-slate-900 dark:border-slate-700 dark:text-white dark:placeholder-slate-500" />
           {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
         </div>
 
         <div className="space-y-1.5">
-          <Label htmlFor="password">Password</Label>
-          <Input id="password" type="password" placeholder="••••••••" {...register("password")} />
+          <Label htmlFor="password" className="text-slate-700 dark:text-slate-300">Password</Label>
+          <Input id="password" type="password" placeholder="••••••••" {...register("password")}
+            className="dark:bg-slate-900 dark:border-slate-700 dark:text-white dark:placeholder-slate-500" />
           {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
         </div>
 
         {error && (
-          <div className="bg-red-50 text-red-600 text-sm px-4 py-3 rounded-lg">
+          <div className="bg-red-50 dark:bg-red-950 text-red-600 dark:text-red-400 text-sm px-4 py-3 rounded-lg">
             {error}
           </div>
         )}
@@ -97,16 +99,16 @@ export default function LoginPage() {
 
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t" />
+          <div className="w-full border-t dark:border-slate-800" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-white px-2 text-muted-foreground">or</span>
+          <span className="bg-white dark:bg-slate-950 px-2 text-slate-400">or</span>
         </div>
       </div>
 
-      <p className="text-center text-sm text-muted-foreground">
+      <p className="text-center text-sm text-slate-500 dark:text-slate-400">
         Don&apos;t have an account?{" "}
-        <Link href="/register" className="text-primary font-medium hover:underline">
+        <Link href="/register" className="text-slate-900 dark:text-white font-medium hover:underline">
           Create one
         </Link>
       </p>

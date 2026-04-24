@@ -64,69 +64,74 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="space-y-1">
-        <div className="lg:hidden text-2xl font-semibold mb-4">NexusHQ</div>
-        <h1 className="text-2xl font-semibold tracking-tight">Create your account</h1>
-        <p className="text-sm text-muted-foreground">Start your 14-day free trial, no credit card required</p>
+  <div className="space-y-6">
+    <div className="space-y-1">
+      <div className="lg:hidden text-2xl font-semibold mb-4 text-slate-900 dark:text-white">NexusHQ</div>
+      <h1 className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-white">Create your account</h1>
+      <p className="text-sm text-slate-500 dark:text-slate-400">Start your 14-day free trial, no credit card required</p>
+    </div>
+
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div className="space-y-1.5">
+        <Label htmlFor="full_name" className="text-slate-700 dark:text-slate-300">Full name</Label>
+        <Input id="full_name" placeholder="Max Johnson" {...register("full_name")}
+          className="dark:bg-slate-900 dark:border-slate-700 dark:text-white dark:placeholder-slate-500" />
+        {errors.full_name && <p className="text-sm text-red-500">{errors.full_name.message}</p>}
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <div className="space-y-1.5">
-          <Label htmlFor="full_name">Full name</Label>
-          <Input id="full_name" placeholder="Max Johnson" {...register("full_name")} />
-          {errors.full_name && <p className="text-sm text-red-500">{errors.full_name.message}</p>}
+      <div className="space-y-1.5">
+        <Label htmlFor="email" className="text-slate-700 dark:text-slate-300">Work email</Label>
+        <Input id="email" type="email" placeholder="you@company.com" {...register("email")}
+          className="dark:bg-slate-900 dark:border-slate-700 dark:text-white dark:placeholder-slate-500" />
+        {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
+      </div>
+
+      <div className="space-y-1.5">
+        <Label htmlFor="password" className="text-slate-700 dark:text-slate-300">Password</Label>
+        <Input id="password" type="password" placeholder="••••••••" {...register("password")}
+          className="dark:bg-slate-900 dark:border-slate-700 dark:text-white dark:placeholder-slate-500" />
+        {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
+      </div>
+
+      <div className="space-y-1.5">
+        <Label htmlFor="workspace_name" className="text-slate-700 dark:text-slate-300">Workspace name</Label>
+        <Input
+          id="workspace_name"
+          placeholder="Acme Corp"
+          {...register("workspace_name")}
+          onChange={handleWorkspaceNameChange}
+          className="dark:bg-slate-900 dark:border-slate-700 dark:text-white dark:placeholder-slate-500"
+        />
+        {errors.workspace_name && <p className="text-sm text-red-500">{errors.workspace_name.message}</p>}
+      </div>
+
+      <div className="space-y-1.5">
+        <Label htmlFor="workspace_slug" className="text-slate-700 dark:text-slate-300">Workspace URL</Label>
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-slate-500 dark:text-slate-400 whitespace-nowrap">nexushq.com/</span>
+          <Input id="workspace_slug" placeholder="acme-corp" {...register("workspace_slug")}
+            className="dark:bg-slate-900 dark:border-slate-700 dark:text-white dark:placeholder-slate-500" />
         </div>
+        {errors.workspace_slug && <p className="text-sm text-red-500">{errors.workspace_slug.message}</p>}
+      </div>
 
-        <div className="space-y-1.5">
-          <Label htmlFor="email">Work email</Label>
-          <Input id="email" type="email" placeholder="you@company.com" {...register("email")} />
-          {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
+      {error && (
+        <div className="bg-red-50 dark:bg-red-950 text-red-600 dark:text-red-400 text-sm px-4 py-3 rounded-lg">
+          {error}
         </div>
+      )}
 
-        <div className="space-y-1.5">
-          <Label htmlFor="password">Password</Label>
-          <Input id="password" type="password" placeholder="••••••••" {...register("password")} />
-          {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
-        </div>
+      <Button type="submit" className="w-full" disabled={loading}>
+        {loading ? "Creating account..." : "Create account"}
+      </Button>
+    </form>
 
-        <div className="space-y-1.5">
-          <Label htmlFor="workspace_name">Workspace name</Label>
-          <Input
-            id="workspace_name"
-            placeholder="Acme Corp"
-            {...register("workspace_name")}
-            onChange={handleWorkspaceNameChange}
-          />
-          {errors.workspace_name && <p className="text-sm text-red-500">{errors.workspace_name.message}</p>}
-        </div>
-
-        <div className="space-y-1.5">
-          <Label htmlFor="workspace_slug">Workspace URL</Label>
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground whitespace-nowrap">nexushq.com/</span>
-            <Input id="workspace_slug" placeholder="acme-corp" {...register("workspace_slug")} />
-          </div>
-          {errors.workspace_slug && <p className="text-sm text-red-500">{errors.workspace_slug.message}</p>}
-        </div>
-
-        {error && (
-          <div className="bg-red-50 text-red-600 text-sm px-4 py-3 rounded-lg">
-            {error}
-          </div>
-        )}
-
-        <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? "Creating account..." : "Create account"}
-        </Button>
-      </form>
-
-      <p className="text-center text-sm text-muted-foreground">
-        Already have an account?{" "}
-        <Link href="/login" className="text-primary font-medium hover:underline">
-          Sign in
-        </Link>
-      </p>
-    </div>
-  );
+    <p className="text-center text-sm text-slate-500 dark:text-slate-400">
+      Already have an account?{" "}
+      <Link href="/login" className="text-slate-900 dark:text-white font-medium hover:underline">
+        Sign in
+      </Link>
+    </p>
+  </div>
+);
 }

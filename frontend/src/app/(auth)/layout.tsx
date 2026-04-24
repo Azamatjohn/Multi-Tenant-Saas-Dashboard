@@ -36,7 +36,7 @@ export default function AuthLayout({
       </div>
 
       {/* Right panel — form */}
-      <div className="flex items-center justify-center min-h-screen p-8 bg-white">
+      <div className="flex items-center justify-center min-h-screen p-8 bg-white dark:bg-slate-950">
         <div className="w-full max-w-sm">
           {children}
         </div>
